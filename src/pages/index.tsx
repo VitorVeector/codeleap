@@ -1,13 +1,10 @@
-import styled from "styled-components"
-
-const Title = styled.a`
-    background-color: #c72e2e;
-`
+import { SignUp } from "./SignUp"
+import { Main } from "./Main"
 
 export default function Home() {
-    return (
+    return (  
         <>
-            <Title>Hello</Title>
-        </>
+            <Main />
+        </>  
     )
 }

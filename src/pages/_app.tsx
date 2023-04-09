@@ -7,9 +7,10 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Codeleap Challenge</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>CodeLeap Challenge</title>
             </Head>
-            <GlobalStyles/>
+            <GlobalStyles/> 
             <Component {...pageProps} />
         </>
     )
