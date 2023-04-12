@@ -1,7 +1,8 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useContext } from 'react';
+import { useForm, useFormContext } from 'react-hook-form';
 import { Input } from 'components/Input';
 import { FormComponent } from './style';
+import axios from 'axios';
 
 interface FormValues {
 	title: string;
@@ -9,10 +10,21 @@ interface FormValues {
 }
 
 export const Form = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+	const formState  = useFormContext();
+	const { register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>();
 
-	const onSubmit = (data: FormValues) => {
-		console.log(data); // Aqui você pode enviar o formulário para o servidor ou fazer outras operações com os dados
+	const onSubmit = async (data: FormValues) => {
+		try {
+			console.log(formState)
+			await axios.post('https://dev.codeleap.co.uk/careers/', {
+				username: formState.getValues,
+				title: data.title,
+				content: data.content 
+			})
+			console.log('mandado')
+		} catch (error) {
+			console.log(error)
+		}
 	};
 
 	return (
@@ -20,10 +32,10 @@ export const Form = () => {
 			<h3>What’s on your mind?</h3>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Input placeholder='Hello world' type="text" label='Title' {...register('title', { required: true })} />
-				{errors.title && <span>This field is required</span>} {/* Mensagem de erro caso o campo seja obrigatório */}
+				{errors.title && <span>This field is required</span>} 
 
 				<Input placeholder='Content here' type="textarea" label='Content' {...register('content', { required: true })} />
-				{errors.content && <span>This field is required</span>} {/* Mensagem de erro caso o campo seja obrigatório */}
+				{errors.content && <span>This field is required</span>} 
 
 				<button type="submit">Create</button>
 			</form>

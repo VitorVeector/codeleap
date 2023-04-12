@@ -50,10 +50,6 @@ export const FormComponent = styled.div`
             font-size: 14px;
         }
 
-        &:hover{
-            background-color: #7695EC99;
-        }
-
         &::before {
             content: '';
             position: absolute;

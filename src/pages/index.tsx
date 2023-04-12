@@ -1,10 +1,15 @@
+import { FormProvider, useForm } from "react-hook-form"
+import Main from "./Main"
 import { SignUp } from "./SignUp"
-import { Main } from "./Main"
+import { useRouter } from "next/router";
 
 export default function Home() {
-    return (  
-        <>
-            <SignUp />
-        </>  
+    const methods = useForm();
+    const router = useRouter()
+
+    return (
+        <FormProvider {...methods}>
+            {router.pathname === '/' ? <SignUp /> : <Main />}
+        </FormProvider>
     )
 }

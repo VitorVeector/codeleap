@@ -1,15 +1,24 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { LoginComponents, SignUpComponent } from './style';
+import { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
 
 type FormData = {
     username: string;
 };
 
 export const SignUp = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { handleSubmit, formState: { errors } } = useForm<FormData>();
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter();
+    const { register } = useFormContext();
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data);
+        setIsLoading(true)
+        setTimeout(() => {
+            router.push('/Main')
+            setIsLoading(false)
+        }, 2000)
     });
 
     return (
@@ -29,8 +38,10 @@ export const SignUp = () => {
                     }
                 })} />
                 {errors.username && <span>{errors.username.message}</span>}
-                <button className={errors.username && 'disable'} onClick={onSubmit}>Enter</button>
+                    <button className={`${errors.username ? 'disable' : ''} ${isLoading ? 'isLoading' : ''}`} disabled={!!errors.username} onClick={onSubmit}>Enter</button>
             </LoginComponents>
         </SignUpComponent>
     );
 };
+
+export default SignUp
