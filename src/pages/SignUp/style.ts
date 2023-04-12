@@ -56,6 +56,12 @@ export const LoginComponents = styled.div`
         }
     }
 
+    span{
+            margin-top: 4px;
+            color: #f33;
+            font-weight: 700;
+    }
+
     button {
         position: relative;
         align-self: flex-end;
@@ -93,6 +99,11 @@ export const LoginComponents = styled.div`
 
         &:hover::before {
             box-shadow: 0 0 0 2px #7695EC;
-        }
+    }
+
+    &.disable{
+        cursor: not-allowed;
+        opacity: .5;
+    }
 }
 `

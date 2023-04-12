@@ -6,7 +6,7 @@ export const Post = () => {
     return (
         <PostComponent>
             <PostHeader/>
-            <PostContent />
+            <PostContent /> 
         </PostComponent>
     )
 }
