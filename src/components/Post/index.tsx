@@ -1,6 +1,6 @@
-import { PostHeader } from "Components/PostHeader"
+import { PostHeader } from "components/PostHeader"
 import { PostComponent } from "./style"
-import { PostContent } from "Components/PostContent"
+import { PostContent } from "components/PostContent"
 
 export const Post = () => {
     return (

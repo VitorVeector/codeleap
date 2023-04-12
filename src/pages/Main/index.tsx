@@ -1,7 +1,7 @@
-import { Header } from "Components/Header"
+import { Header } from "components/Header"
 import { MainComponent, MainContent } from "./style"
-import { Form } from "Components/Form"
-import { Post } from "Components/Post"
+import { Form } from "components/Form"
+import { Post } from "components/Post"
 
 export const Main = () => {
     return (

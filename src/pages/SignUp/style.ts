@@ -81,10 +81,6 @@ export const LoginComponents = styled.div`
             font-size: 14px;
         }
 
-        &:hover{
-            background-color: #7695EC99;
-        }
-
         &::before {
             content: '';
             position: absolute;
