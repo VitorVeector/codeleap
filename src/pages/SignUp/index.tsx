@@ -12,11 +12,12 @@ export const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter();
-    const { setUsername, username } = useData()
+    const { setUsername } = useData()
 
     const onSubmit = handleSubmit((data) => {
         setIsLoading(true);
         setUsername(data.username);
+        localStorage.setItem('username', data.username)
         setTimeout(() => {
             router.push('/Main');
             setIsLoading(false);

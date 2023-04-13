@@ -1,14 +1,17 @@
-import { DataProvider } from "context/DataContext";
+import { useState, useEffect } from "react"
 import Main from "./Main"
 import { SignUp } from "./SignUp"
-import { useRouter } from "next/router";
 
 export default function Home() {
-    const router = useRouter()
+    const [logged, setLogged] = useState<boolean>(false)
+
+    useEffect(() => {
+        setLogged(!!localStorage.getItem('username'))
+    }, [])
 
     return (
         <>
-            {router.pathname === '/' ? <SignUp /> : <Main />}
+            {logged ? <SignUp /> : <Main />}
         </>
     )
 }

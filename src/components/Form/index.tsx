@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from 'components/Input';
 import { FormComponent } from './style';
 import { useData } from 'hooks/useData';
+import { useRouter } from 'next/router';
 
 interface FormValues {
 	title: string;
@@ -12,18 +13,27 @@ interface FormValues {
 export const Form = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const { postData, username } = useData()
+	const { postData, username, updateData, data } = useData()
+	const [logged, setLogged] = useState<boolean>(false)
+	const router = useRouter();
+
+    useEffect(() => {
+        setLogged(!!localStorage.getItem('username'))
+    }, [])
 
 	const onSubmit = (data: FormValues) => {
-		try {
-			setIsLoading(true)
-			setTimeout( () => {
-				postData({username, title: data.title, content: data.content})
-				setIsLoading(false)
-			}, 2000)
-			
-		} catch (error) {
-			console.log(error)
+		if(logged){
+			try {
+				setIsLoading(true)
+				setTimeout( () => {
+					postData({username: username, title: data.title, content: data.content})
+					setIsLoading(false)
+				}, 2000)
+			} catch (error) {
+				console.log(error)
+			}
+		} else {
+			router.push('/SignUp');
 		}
 	};
 

@@ -18,6 +18,8 @@ interface DataContextData {
     postData: (dataUser: Omit<DataInterface, "id" | "created_datetime">) => void;
     setUsername: (username: string) => void;
     username: string;
+    updateData: ([]) => void;
+    isLoading: boolean
 }
 
 export const DataContext = createContext<DataContextData>({} as DataContextData)
@@ -25,6 +27,7 @@ export const DataContext = createContext<DataContextData>({} as DataContextData)
 export const DataProvider = ({ children }: DataProviderProps) => {
     const [username, setUsername] = useState<string>('')
     const [data, setData] = useState<DataInterface[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const getData = async () => {
         console.log('teste')
@@ -37,19 +40,26 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             console.log(err)
         }
     }
-    
+
     useEffect(() => {
         getData()
     }, [])
 
+    const updateData = (newData: DataInterface[]) => {
+        setData(newData);
+    };
+
     const postData = async (dataUser: Omit<DataInterface, "id" | "created_datetime">) => {
         try {
-            await axios.post('https://dev.codeleap.co.uk/careers/', dataUser )
+            console.log(dataUser)
+            await axios.post('https://dev.codeleap.co.uk/careers/', dataUser );
+            const newData = await getData();
+            setData(newData);
         } catch (err) {
-            throw err
+          throw err;
         }
     }
 
-    return <DataContext.Provider value={{ data, postData, setUsername, username }}>{children}</DataContext.Provider>
+    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, isLoading }}>{children}</DataContext.Provider>
 }
 
