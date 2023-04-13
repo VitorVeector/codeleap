@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { useForm, useFormContext } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Input } from 'components/Input';
 import { FormComponent } from './style';
-import axios from 'axios';
+import { useData } from 'hooks/useData';
 
 interface FormValues {
 	title: string;
@@ -10,18 +10,18 @@ interface FormValues {
 }
 
 export const Form = () => {
-	const formState  = useFormContext();
-	const { register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>();
+	const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const { postData, username } = useData()
 
-	const onSubmit = async (data: FormValues) => {
+	const onSubmit = (data: FormValues) => {
 		try {
-			console.log(formState)
-			await axios.post('https://dev.codeleap.co.uk/careers/', {
-				username: formState.getValues,
-				title: data.title,
-				content: data.content 
-			})
-			console.log('mandado')
+			setIsLoading(true)
+			setTimeout( () => {
+				postData({username, title: data.title, content: data.content})
+				setIsLoading(false)
+			}, 2000)
+			
 		} catch (error) {
 			console.log(error)
 		}
@@ -37,7 +37,7 @@ export const Form = () => {
 				<Input placeholder='Content here' type="textarea" label='Content' {...register('content', { required: true })} />
 				{errors.content && <span>This field is required</span>} 
 
-				<button type="submit">Create</button>
+				<button className={`${errors.content && errors.title ? 'disable' : ''} ${isLoading ? 'isLoading' : ''}`} type="submit">Create</button>
 			</form>
 		</FormComponent>
 	);

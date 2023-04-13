@@ -2,33 +2,10 @@ import { Header } from "components/Header"
 import { MainComponent, MainContent } from "./style"
 import { Form } from "components/Form"
 import { Post } from "components/Post"
-import { useEffect, useState  } from 'react';
-import axios from "axios";
-
-type DataInterface = {
-    id: number;
-    username: string;
-    created_datetime: string;
-    title: string;
-    content: string
-}
+import { useData } from "hooks/useData";
 
 export const Main = () => {
-
-    const [data, setData] = useState<DataInterface[]>([])
-
-    const getData = async () => {
-        try {
-            const response = await axios.get('https://dev.codeleap.co.uk/careers/')
-            setData(response.data.results)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        getData()
-      }, [])
+    const {data} = useData()
 
     return (
         <MainComponent>
