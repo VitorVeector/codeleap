@@ -24,6 +24,8 @@ interface DataContextData {
     modalDeleteIsOpen: boolean;
     setIdModal: (id: number) => void;
     idModal: number;
+    setRequestLoading: (boolean: boolean) => void;
+    requestLoading: boolean
 }
 
 export const DataContext = createContext<DataContextData>({} as DataContextData)
@@ -33,6 +35,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const [data, setData] = useState<DataInterface[]>([])
     const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
     const [idModal, setIdModal] = useState<number>(0)
+    const [requestLoading, setRequestLoading] = useState<boolean>(false)
 
     const getData = async () => {
         try {
@@ -55,32 +58,33 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     const postData = async (dataUser: Omit<DataInterface, "id" | "created_datetime">) => {
         try {
-            console.log(dataUser)
-            await axios.post('https://dev.codeleap.co.uk/careers/', dataUser );
+            setRequestLoading(true)
+            await axios.post('https://dev.codeleap.co.uk/careers/', dataUser);
             const newData = await getData();
             setData(newData);
         } catch (err) {
-          throw err;
+            throw err;
+        } finally {
+            setRequestLoading(false)
         }
     }
 
-    const axiosInstance = axios.create({
-        withCredentials: true
-      })
-      
-      axiosInstance.interceptors.request.use((config) => {
-        config.headers['Access-Control-Allow-Origin'] = '*'
-        return config
-      })
-      
-      const deletePost = async (id: number) => {
+    const deletePost = async (id: number) => {
         try {
-          await axiosInstance.delete(`https://dev.codeleap.co.uk/careers/${id}/`)
+            setRequestLoading(true)
+            const string = JSON.stringify(id)
+            console.log(string)
+            await axios.delete(`https://dev.codeleap.co.uk/careers/${string}/`)
+            const newData = await getData();
+            setData(newData);
+            setModalDeleteIsOpen(false)
         } catch (err) {
-          console.log(err)
+            console.log(err)
+        } finally {
+            setRequestLoading(false)
         }
-      }
+    }
 
-    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, deletePost, setModalDeleteIsOpen, modalDeleteIsOpen, idModal, setIdModal }}>{children}</DataContext.Provider>
+    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, deletePost, setModalDeleteIsOpen, modalDeleteIsOpen, idModal, setIdModal, setRequestLoading, requestLoading }}>{children}</DataContext.Provider>
 }
 

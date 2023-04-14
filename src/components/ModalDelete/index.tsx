@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const ModalDelete = () => {
-    const { modalDeleteIsOpen, setModalDeleteIsOpen, deletePost, idModal } = useData()
+    const { modalDeleteIsOpen, setModalDeleteIsOpen, deletePost, idModal, requestLoading } = useData()
 
     const closeModal = () => {
         setModalDeleteIsOpen(!modalDeleteIsOpen)
@@ -32,12 +32,13 @@ export const ModalDelete = () => {
                                 onClick={closeModal}>
                                 Cancel
                             </CancelButton>
-                            <DelteButton
+                            <DeleteButton
+                                className={requestLoading ? 'loading' : ''}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: .95 }}
                                 onClick={handleDelete}>
                                 Delete
-                            </DelteButton>
+                            </DeleteButton>
                         </div>
                     </ModalBox>
                 </ModalWrapper> : <></>}
@@ -88,7 +89,7 @@ const CancelButton = styled(motion.button)`
   margin-right: 16px;
 `
 
-const DelteButton = styled(motion.button)`
+const DeleteButton = styled(motion.button)`
   background-color: #FF5151;
   border: unset;
   border-radius: 8px;
@@ -97,6 +98,34 @@ const DelteButton = styled(motion.button)`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-`
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &.loading::before {
+    opacity: 1;
+  }
+
+  @keyframes spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+`;
 
 
