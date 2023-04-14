@@ -47,7 +47,7 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 2 }}
                 >
-                    <Image className="codeleap_logo" src={CodeLeapLogo} alt="Logo CodeLeap" />
+                    <Image className="codeleap_logo" src={CodeLeapLogo} alt="Logo CodeLeap" rel="preload" priority />
             </motion.div>
             <LoadingWrapper>
                 <Loading
