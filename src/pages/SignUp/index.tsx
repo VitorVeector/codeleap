@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { LoginComponents, SignUpComponent } from './style';
+import { LoginComponents, SignUpComponent } from "pages/SignUp/style"
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useData } from 'Hooks/useData';
