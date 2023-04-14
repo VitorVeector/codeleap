@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react"
-import Main from "./Main"
-import { SignUp } from "./SignUp"
 import styled from "styled-components"
 import Image from 'next/image'
 import CodeLeapLogo from 'assets/codeleap_logo_black 1.svg'

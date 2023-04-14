@@ -14,7 +14,7 @@ const HomeComponentAnimation = {
     hidden: {opacity: 0},
 }
 
-export const SignUp = () => {
+const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isHidden, setIsHidden] = useState<boolean>(false)

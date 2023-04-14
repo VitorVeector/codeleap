@@ -6,7 +6,7 @@ import { useData } from "Hooks/useData";
 import { inAnimation } from "animation/in";
 import { ModalDelete } from "components/ModalDelete";
 
-export const Main = () => {
+const Main = () => {
     const {data} = useData()
 
     return (
