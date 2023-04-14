@@ -1,38 +1,114 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# CodeLeap Project
 
-First, run the development server:
+The CodeLeap Challenge Project is a CRUD front-end, back-end, or full-stack development challenge, where the task is to implement the provided Figma layout [link]. ReactJS and NextJS were used to absorb as many resources as possible for the application's development.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+The objective of the challenge is to create a web application that allows basic CRUD (Create, Read, Update, and Delete) operations, following the provided design. ReactJS and NextJS provide advanced features and enable the creation of high-quality web applications. The aim of the project is to provide a learning opportunity and improve web development skills, as well as to showcase participants' ability to create functional and visually appealing applications following a pre-defined design.
+
+## deploy:
+
+[CodeLeap](https://codeleap-git-main-vitorveector.vercel.app/)
+
+
+
+<div align="center">
+  <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQH4m3WWu2i6Eg/company-logo_200_200/0/1558282830261?e=2159024400&v=beta&t=PNUkaBZFKo9lHu7oDTEGLU54AvHeAYhvBiZ6hY8BCRM" alt="CodeLeap logo">
+</div>
+## API Reference
+
+#### Get all items
+
+```http
+  GET https://dev.codeleap.co.uk/careers/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Your API key |
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### Get item
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```http
+  GET https://dev.codeleap.co.uk/careers/${OBJECT_ID}
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Get items
 
-## Learn More
+```http
+  GET https://dev.codeleap.co.uk/careers/
+```
 
-To learn more about Next.js, take a look at the following resources:
+#### Delete item
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```http
+  GET https://dev.codeleap.co.uk/careers/${OBJECT_ID}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Edit (PATCH) item
+
+```http
+  GET https://dev.codeleap.co.uk/careers/${OBJECT_ID}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `{title, content}`    | `object` | **Required**. Id of item to fetch |
+
+
+## Badges
+
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
+[![ReactJS](https://img.shields.io/badge/ReactJS-blue?logo=React)](https://reactjs.org/)
+
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-blue?logo=framer)](https://www.framer.com/motion/)
+
+[![NextJS](https://img.shields.io/badge/NextJS-black?logo=Next.js)](https://nextjs.org/)
+
+[![Styled Components](https://img.shields.io/badge/Styled%20Components-pink?logo=styled-components)](https://styled-components.com/)
+
+[![Axios](https://img.shields.io/badge/Axios-yellowgreen)](https://github.com/axios/axios)
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)](https://www.typescriptlang.org/)
+
+[![Phosphor Icon](https://img.shields.io/badge/Phosphor%20Icons-purple)](https://phosphoricons.com/)
+## Demo Mobile
+
+Insert gif or link to demo
+
+![Gif Mobile](https://github.com/VitorVeector/codeleap/blob/main/public/CodeLeapGIF.gif?raw=true)
+## Documentation
+
+[Documentation](https://dev.codeleap.co.uk/careers/)
+
+
+## Authors
+
+- [@vitorveector](https://www.github.com/vitorveector)
+
+
+## Screenshots
+
+![App Screenshot](https://github.com/VitorVeector/codeleap/blob/main/public/CodeLeap.png?raw=true)
+
+![Login](https://github.com/VitorVeector/codeleap/blob/main/public/Validation1.png?raw=true)
+
+![Login](https://github.com/VitorVeector/codeleap/blob/main/public/Validation2.png?raw=true)
+
+![Login](https://github.com/VitorVeector/codeleap/blob/main/public/Validation3.png?raw=true)
+
+### PixelPerfect
+
+![Pixel Perfect](https://github.com/VitorVeector/codeleap/blob/main/public/PixelPerfect.png?raw=true)
