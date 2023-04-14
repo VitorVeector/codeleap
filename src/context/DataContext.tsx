@@ -22,10 +22,13 @@ interface DataContextData {
     deletePost: (id: number) => void;
     setModalDeleteIsOpen: (id: boolean) => void;
     modalDeleteIsOpen: boolean;
+    setModalEditIsOpen: (id: boolean) => void;
+    modalEditIsOpen: boolean;
     setIdModal: (id: number) => void;
     idModal: number;
     setRequestLoading: (boolean: boolean) => void;
-    requestLoading: boolean
+    requestLoading: boolean;
+    editPost: (dataUser: Pick<DataInterface, "id" | "title" | "content">) => void;
 }
 
 export const DataContext = createContext<DataContextData>({} as DataContextData)
@@ -34,6 +37,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const [username, setUsername] = useState<string>('')
     const [data, setData] = useState<DataInterface[]>([])
     const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
+    const [modalEditIsOpen, setModalEditIsOpen] = useState<boolean>(false)
     const [idModal, setIdModal] = useState<number>(0)
     const [requestLoading, setRequestLoading] = useState<boolean>(false)
 
@@ -73,7 +77,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         try {
             setRequestLoading(true)
             const string = JSON.stringify(id)
-            console.log(string)
             await axios.delete(`https://dev.codeleap.co.uk/careers/${string}/`)
             const newData = await getData();
             setData(newData);
@@ -85,6 +88,33 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     }
 
-    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, deletePost, setModalDeleteIsOpen, modalDeleteIsOpen, idModal, setIdModal, setRequestLoading, requestLoading }}>{children}</DataContext.Provider>
+    const editPost = async (data: Pick<DataInterface, "id" | "title" | "content">) => {
+        try {
+            const string = JSON.stringify(data.id);
+            await axios.patch(`https://dev.codeleap.co.uk/careers/${string}/`, data);
+            const newData = await getData();
+            setData(newData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return <DataContext.Provider value={{
+        data,
+        postData,
+        setUsername,
+        username,
+        updateData,
+        deletePost,
+        setModalDeleteIsOpen,
+        setModalEditIsOpen,
+        modalEditIsOpen,
+        modalDeleteIsOpen,
+        idModal,
+        setIdModal,
+        setRequestLoading,
+        requestLoading,
+        editPost
+    }}>{children}</DataContext.Provider>
 }
 

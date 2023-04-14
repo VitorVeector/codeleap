@@ -14,13 +14,18 @@ type PostProps = {
     content: string;
 }
 
-export const Post = ({ id, username, time, title, content }: PostProps) => {
+export const Post = ({ id, username: name, time, title, content }: PostProps) => {
     const [timeText, setTimeText] = useState<string>('')
-    const { setModalDeleteIsOpen, modalDeleteIsOpen, setIdModal } = useData()
+    const { setModalDeleteIsOpen, modalDeleteIsOpen, setIdModal, setModalEditIsOpen, modalEditIsOpen, username } = useData()
 
-    function handleOpenModal(id: number){
+    function handleOpenModalDel(id: number){
         setIdModal(id)
         setModalDeleteIsOpen(!modalDeleteIsOpen)
+    }
+
+    function handleOpenModalEdit(id: number){
+        setIdModal(id)
+        setModalEditIsOpen(!modalEditIsOpen)
     }
 
     useEffect(() => {
@@ -51,24 +56,23 @@ export const Post = ({ id, username, time, title, content }: PostProps) => {
             <PostComponent>
                 <PostHeaderComponent>
                     <h3>{title}</h3>
-                    <div className="post_header-btn">
-                        <button onClick={() => handleOpenModal(id)}>
+                    {username === name ? <div className="post_header-btn">
+                        <button onClick={() => handleOpenModalDel(id)}>
                             <Image className="post_header-trash img-btn" src={trash} alt="" />
                         </button>
-                        <button>
+                        <button onClick={() => handleOpenModalEdit(id)}>
                             <Image className="post_header-edit img-btn" src={edit} alt="" />
                         </button>
-                    </div>
+                    </div> : <></>}
                 </PostHeaderComponent>
                 <PostContentComponent>
                     <div>
-                        <p className="postAuthor">@{username}</p>
+                        <p className="postAuthor">@{name}</p>
                         <p className="published">{timeText}</p>
                     </div>
                     <p>{content}</p>
                 </PostContentComponent>
             </PostComponent>
-
         </>
     )
 }

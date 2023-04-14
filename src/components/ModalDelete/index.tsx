@@ -11,9 +11,8 @@ export const ModalDelete = () => {
         setModalDeleteIsOpen(!modalDeleteIsOpen)
     };
 
-    const handleDelete = async () => {
-        await deletePost(idModal)
-        console.log(idModal)
+    const handleDelete = () => {
+        deletePost(idModal)
     }
 
     return (
@@ -53,6 +52,7 @@ const ModalWrapper = styled(motion.div)`
   align-items: center;
   justify-content: center;
   position: fixed;
+  bottom: 0;
   width: 100%;
   height: 100vh;
   background-color: #777777cc;
@@ -99,33 +99,6 @@ const DeleteButton = styled(motion.button)`
   font-weight: 700;
   cursor: pointer;
   position: relative;
-
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fff;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  &.loading::before {
-    opacity: 1;
-  }
-
-  @keyframes spin {
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
 `;
 
 
