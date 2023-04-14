@@ -1,6 +1,7 @@
+import { motion } from "framer-motion"
 import styled from "styled-components"
 
-export const SignUpComponent = styled.div`
+export const SignUpComponent = styled(motion.div)`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,7 +9,7 @@ export const SignUpComponent = styled.div`
     background-color: #DDDDDD; 
 `
 
-export const LoginComponents = styled.div`
+export const LoginComponents = styled(motion.div)`
     background-color: #fff;
     border-radius: 16px;
     padding: 24px;

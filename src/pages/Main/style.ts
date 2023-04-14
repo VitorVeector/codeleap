@@ -1,6 +1,7 @@
+import { motion } from "framer-motion"
 import styled from "styled-components" 
 
-export const MainComponent = styled.div`
+export const MainComponent = styled(motion.div)`
     background-color: #ddd;
     display: flex;
     flex-direction: column;

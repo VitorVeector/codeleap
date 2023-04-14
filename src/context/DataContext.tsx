@@ -19,7 +19,11 @@ interface DataContextData {
     setUsername: (username: string) => void;
     username: string;
     updateData: ([]) => void;
-    isLoading: boolean
+    deletePost: (id: number) => void;
+    setModalDeleteIsOpen: (id: boolean) => void;
+    modalDeleteIsOpen: boolean;
+    setIdModal: (id: number) => void;
+    idModal: number;
 }
 
 export const DataContext = createContext<DataContextData>({} as DataContextData)
@@ -27,10 +31,10 @@ export const DataContext = createContext<DataContextData>({} as DataContextData)
 export const DataProvider = ({ children }: DataProviderProps) => {
     const [username, setUsername] = useState<string>('')
     const [data, setData] = useState<DataInterface[]>([])
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState<boolean>(false)
+    const [idModal, setIdModal] = useState<number>(0)
 
     const getData = async () => {
-        console.log('teste')
         try {
             const response = await axios.get('https://dev.codeleap.co.uk/careers/')
             const newData = response.data.results
@@ -60,6 +64,23 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     }
 
-    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, isLoading }}>{children}</DataContext.Provider>
+    const axiosInstance = axios.create({
+        withCredentials: true
+      })
+      
+      axiosInstance.interceptors.request.use((config) => {
+        config.headers['Access-Control-Allow-Origin'] = '*'
+        return config
+      })
+      
+      const deletePost = async (id: number) => {
+        try {
+          await axiosInstance.delete(`https://dev.codeleap.co.uk/careers/${id}/`)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+
+    return <DataContext.Provider value={{ data, postData, setUsername, username, updateData, deletePost, setModalDeleteIsOpen, modalDeleteIsOpen, idModal, setIdModal }}>{children}</DataContext.Provider>
 }
 

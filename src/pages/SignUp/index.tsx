@@ -2,21 +2,29 @@ import { useForm } from 'react-hook-form';
 import { LoginComponents, SignUpComponent } from './style';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useData } from 'hooks/useData';
+import { useData } from 'Hooks/useData';
+import { inAnimation } from 'animation/in';
 
 type FormData = {
     username: string;
 };
 
+const HomeComponentAnimation = {
+    visible: {opacity: 1},
+    hidden: {opacity: 0},
+}
+
 export const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isHidden, setIsHidden] = useState<boolean>(false)
     const router = useRouter();
     const { setUsername } = useData()
 
     const onSubmit = handleSubmit((data) => {
         setIsLoading(true);
         setUsername(data.username);
+        setIsHidden(true)
         localStorage.setItem('username', data.username)
         setTimeout(() => {
             router.push('/Main');
@@ -25,8 +33,14 @@ export const SignUp = () => {
     });
 
     return (
-        <SignUpComponent>
-            <LoginComponents>
+        <SignUpComponent
+            {...inAnimation}
+            >
+            <LoginComponents
+                animate={isHidden ? "hidden" : "visible"}
+                transition={{ duration: 1, delay: 1 }}
+                variants={HomeComponentAnimation}
+                >
                 <h3>Welcome to Codeleap network!</h3>
                 <label htmlFor="">Please enter your username</label>
                 <input type="text" placeholder="John doe" {...register('username', {
