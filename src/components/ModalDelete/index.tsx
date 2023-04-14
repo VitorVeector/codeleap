@@ -1,7 +1,7 @@
 import { useData } from 'Hooks/useData';
 import { inAnimation } from 'animation/in';
 import { motion } from 'framer-motion';
-import React, { ReactNode, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export const ModalDelete = () => {
