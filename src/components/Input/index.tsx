@@ -5,6 +5,7 @@ interface InputProps {
     type: string;
     label?: string;
     placeholder?: string;
+    defaultValue?: string;
 }
 
 interface InputWithRefProps extends InputProps {
@@ -16,9 +17,9 @@ export const Input = forwardRef<HTMLInputElement, InputWithRefProps>(function In
         <InputComponent>
             {label && <label htmlFor={rest.name}>{label}</label>}
             {type === 'textarea' ? (
-                <textarea ref={ref as unknown as React.MutableRefObject<HTMLTextAreaElement>} {...rest} />
+                <textarea defaultValue={rest.defaultValue} ref={ref as unknown as React.MutableRefObject<HTMLTextAreaElement>} {...rest} />
             ) : (
-                <input ref={ref as React.MutableRefObject<HTMLInputElement>} type={type} {...rest} />
+                <input defaultValue={rest.defaultValue} ref={ref as React.MutableRefObject<HTMLInputElement>} type={type} {...rest} />
             )}
         </InputComponent>
     );

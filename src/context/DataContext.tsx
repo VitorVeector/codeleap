@@ -13,6 +13,8 @@ interface DataProviderProps {
     children: ReactNode;
 }
 
+export type ActuallyPost = Pick<DataInterface, "title" | "content">
+
 interface DataContextData {
     data: DataInterface[];
     postData: (dataUser: Omit<DataInterface, "id" | "created_datetime">) => void;
@@ -29,6 +31,8 @@ interface DataContextData {
     setRequestLoading: (boolean: boolean) => void;
     requestLoading: boolean;
     editPost: (dataUser: Pick<DataInterface, "id" | "title" | "content">) => void;
+    getPostData: (id: number) => void;
+    actuallyPost: ActuallyPost
 }
 
 export const DataContext = createContext<DataContextData>({} as DataContextData)
@@ -40,6 +44,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const [modalEditIsOpen, setModalEditIsOpen] = useState<boolean>(false)
     const [idModal, setIdModal] = useState<number>(0)
     const [requestLoading, setRequestLoading] = useState<boolean>(false)
+    const [actuallyPost, setActuallyPost] = useState<ActuallyPost>({
+        title: '',
+        content: ''
+    })
 
     const getData = async () => {
         try {
@@ -70,6 +78,14 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             throw err;
         } finally {
             setRequestLoading(false)
+        }
+    }
+
+    const getPostData = (id: number) => {
+        
+        const post = data.find(post => post.id === id)
+        if (post?.title && post?.content) {
+            setActuallyPost({ title: post.title, content: post.content })
         }
     }
 
@@ -114,7 +130,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setIdModal,
         setRequestLoading,
         requestLoading,
-        editPost
+        editPost,
+        getPostData,
+        actuallyPost
     }}>{children}</DataContext.Provider>
 }
 

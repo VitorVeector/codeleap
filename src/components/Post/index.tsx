@@ -1,10 +1,14 @@
-import { PostComponent, PostContentComponent, PostHeaderComponent } from "./style"
-import Image from "next/image"
-import { ReactNode, useEffect, useState } from "react"
+import {
+    PostComponent,
+    PostContentComponent,
+    PostHeaderComponent,
+} from "./style";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-import trash from 'assets/trash.png'
-import edit from 'assets/edit.png'
-import { useData } from "Hooks/useData"
+import trash from "assets/trash.png";
+import edit from "assets/edit.png";
+import { useData } from "Hooks/useData";
 
 type PostProps = {
     id: number;
@@ -12,20 +16,35 @@ type PostProps = {
     time: string;
     title: string;
     content: string;
-}
+};
 
-export const Post = ({ id, username: name, time, title, content }: PostProps) => {
-    const [timeText, setTimeText] = useState<string>('')
-    const { setModalDeleteIsOpen, modalDeleteIsOpen, setIdModal, setModalEditIsOpen, modalEditIsOpen, username } = useData()
+export const Post = ({
+    id,
+    username: name,
+    time,
+    title,
+    content,
+}: PostProps) => {
+    const [timeText, setTimeText] = useState<string>("");
+    const {
+        setModalDeleteIsOpen,
+        modalDeleteIsOpen,
+        setIdModal,
+        setModalEditIsOpen,
+        modalEditIsOpen,
+        username,
+        getPostData
+    } = useData();
 
-    function handleOpenModalDel(id: number){
-        setIdModal(id)
-        setModalDeleteIsOpen(!modalDeleteIsOpen)
+    function handleOpenModalDel(id: number) {
+        setIdModal(id);
+        setModalDeleteIsOpen(!modalDeleteIsOpen);
     }
 
-    function handleOpenModalEdit(id: number){
-        setIdModal(id)
-        setModalEditIsOpen(!modalEditIsOpen)
+    function handleOpenModalEdit(id: number) {
+        setIdModal(id);
+        getPostData(id);
+        setModalEditIsOpen(!modalEditIsOpen);
     }
 
     useEffect(() => {
@@ -56,14 +75,26 @@ export const Post = ({ id, username: name, time, title, content }: PostProps) =>
             <PostComponent>
                 <PostHeaderComponent>
                     <h3>{title}</h3>
-                    {username === name ? <div className="post_header-btn">
-                        <button onClick={() => handleOpenModalDel(id)}>
-                            <Image className="post_header-trash img-btn" src={trash} alt="" />
-                        </button>
-                        <button onClick={() => handleOpenModalEdit(id)}>
-                            <Image className="post_header-edit img-btn" src={edit} alt="" />
-                        </button>
-                    </div> : <></>}
+                    {username === name ? (
+                        <div className="post_header-btn">
+                            <button onClick={() => handleOpenModalDel(id)}>
+                                <Image
+                                    className="post_header-trash img-btn"
+                                    src={trash}
+                                    alt=""
+                                />
+                            </button>
+                            <button onClick={() => handleOpenModalEdit(id)}>
+                                <Image
+                                    className="post_header-edit img-btn"
+                                    src={edit}
+                                    alt=""
+                                />
+                            </button>
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                 </PostHeaderComponent>
                 <PostContentComponent>
                     <div>
@@ -74,5 +105,5 @@ export const Post = ({ id, username: name, time, title, content }: PostProps) =>
                 </PostContentComponent>
             </PostComponent>
         </>
-    )
-}
+    );
+};
